@@ -1,5 +1,8 @@
 package it.unibs.tamagolem;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import it.unibs.mylib.EstrazioniCasuali;
 
 /**
@@ -15,18 +18,33 @@ public class Equilibrio {
 	/** Il valore massimo (in modulo) presente in <code>potenze</code> . */
 	private int maxPotenza;
 	private final Elemento[] pietreGiocabili;
+	private String nomi[] = {"berillio", "vanadio", "argo", "scandio", "rubidio", "zirconio", "tecneto", "rutenio", "antimonio", "xeno", "wolframio",
+			"osmio", "radon", "meitmerio", "nihonio", "livermorio", "protoattinio", "berkelio", "hassio", "lantanio", "boro", "renio", "afnio"};
 	
 	
-	public Equilibrio(int N, String...elementNames) {
-		if (elementNames.length<N) throw new NullPointerException();
+	public Equilibrio(int N) {
+		String[] elementNames = elementiCasuali(nomi, N);
 		pietreGiocabili = new Elemento[N];
 		for (int i=0; i<N; i++) {
+			
 			pietreGiocabili[i] = new Elemento(elementNames[i], i);
 		}
 		potenze = creaEqulibrio(N);
 	}
 	
 	
+	private String[] elementiCasuali(String[] _nomi, int n) {
+		Random random = new Random();
+		int indice = random.nextInt(n);
+		for (int i = 0; i < n; i++) {
+			String string = nomi[indice];
+			_nomi[i] = string;
+			indice += random.nextInt(23/n)+1;
+		}
+		return _nomi;
+	}
+
+
 	/**
 	 * Questo metodo verrà poi rimosso, serve solo a noi all'inizio
 	 * per avere un'idea di come usare la classe e i suoi metodi.
@@ -34,10 +52,8 @@ public class Equilibrio {
 	@Deprecated
 	public static void main() {
 		
-		int N = 6;
-		String[] elementNames = "H-He-Li-Be-B-C-N-O-F-Ne-Na".split("-");
-		
-		Equilibrio equilibrio = new Equilibrio(N, elementNames);
+		int N = 6;		
+		Equilibrio equilibrio = new Equilibrio(N);
 		System.out.println(equilibrio);
 		int V = equilibrio.getSup();
 		System.out.println("V: "+V);
@@ -134,12 +150,12 @@ public class Equilibrio {
 		String s = "%s%3s";
 		sb.append(s.formatted("",""));
 		for (int i=0; i<potenze.length; i++)
-			sb.append(s.formatted(" ", pietreGiocabili[i]));
+			sb.append(s.formatted(" ", pietreGiocabili[i].getNome().substring(0, 2)));
 		
 		
 		for (int i=0; i<potenze.length; i++) {
 			sb.append("\n");
-			sb.append(s.formatted("",pietreGiocabili[i]));
+			sb.append(s.formatted("",pietreGiocabili[i].getNome().substring(0, 2)));
 			for (int j=0; j<potenze[0].length; j++) {
 				sb.append(s.formatted(" ", potenze[i][j]));
 			}
@@ -148,6 +164,12 @@ public class Equilibrio {
 		
 		return sb.toString();
 	}
+	
+	//metodo che passa la lista di pietre disponibili da utilizzare nella classe Scontro
+	public void getPietre(ArrayList<Elemento> pietre) {
+		pietre.addAll(pietreGiocabili);
+	}
+	
 	
 	
 	
