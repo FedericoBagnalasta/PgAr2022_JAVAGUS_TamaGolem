@@ -33,6 +33,7 @@ public class Equilibrio {
 	}
 	
 	
+	
 	private String[] elementiCasuali(String[] _nomi, int n) {
 		Random random = new Random();
 		int indice = random.nextInt(n);
@@ -167,7 +168,9 @@ public class Equilibrio {
 	
 	//metodo che passa la lista di pietre disponibili da utilizzare nella classe Scontro
 	public void getPietre(ArrayList<Elemento> pietre) {
-		pietre.addAll(pietreGiocabili);
+		for (int i = 0; i < pietreGiocabili.length; i++) {
+			pietre.add(pietreGiocabili[i]);
+		}
 	}
 	
 	

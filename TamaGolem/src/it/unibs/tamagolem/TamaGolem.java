@@ -8,7 +8,7 @@ public class TamaGolem {
 	
 	private int puntiVita;
 	private String nome;
-	public static final int PUNTI_VITA_MAX = 30;
+	public static final int PUNTI_VITA_MAX = 10;
 	public static final int NUM_PIETRE = 3;
 	
 	Deque<Elemento> pietreGiocabili = new ArrayDeque <> ();
@@ -40,7 +40,7 @@ public class TamaGolem {
 
 	//Metodo che infligge danni al tamaGolem
 	public void perdiVita(int danniInflitti) {
-		puntiVita = Math.max(0, puntiVita - danniInflitti) ;
+		puntiVita = Math.max(0, puntiVita - Math.abs(danniInflitti)) ;
 	}
 	
 	//Metodo di verifica della morte del TamaGolem
@@ -60,22 +60,29 @@ public class TamaGolem {
 	//Metodo che permette al TamaGolem di scagliare una pietra
 	
 	public Elemento scagliaPietre() {
-		
-		for(Elemento pietra: pietreGiocabili) {
-			return pietra;
-		}
-		return null;
+		Elemento a;
+		a = pietreGiocabili.pollFirst();
+		pietreGiocabili.add(a);
+		a = pietreGiocabili.getFirst();
+		return a;
 	}
 	
 	//Metodo che permette di visualizzare i dati relativi al TamaGolem
 	public void stampaTamaGolem() {
+		int i =0;
 		System.out.println("===========================");
 		System.out.printf("TamaGolem:     %s\n", getNome());
 		System.out.printf("Punti vita:    %d\n", getPuntiVita());
 		System.out.println("Pietre del TamaGolem:");
 		for(Elemento pietra: pietreGiocabili) {
-		//	System.out.printf("%s ", pietra.getNome());//Serve metodo getNome in Elemento
+			if (i==0) {
+				System.out.printf(">%s< ", pietra.getNome());
+			}
+			else 
+				System.out.printf("%s ", pietra.getNome());
+			i++;
 		}
+		System.out.println();
 		System.out.println("===========================");
 	}
 }
