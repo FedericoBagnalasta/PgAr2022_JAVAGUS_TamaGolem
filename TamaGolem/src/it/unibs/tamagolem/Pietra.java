@@ -53,7 +53,7 @@ public class Pietra {
 	
 	@Override
 	public String toString() {
-		return "$s (%s)".formatted(elemento.nome, elemento.simbolo);
+		return "%s (%s)".formatted(elemento.nome, elemento.simbolo);
 	}
 
 	
