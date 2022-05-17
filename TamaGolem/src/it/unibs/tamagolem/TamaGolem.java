@@ -11,7 +11,7 @@ public class TamaGolem {
 	public static final int PUNTI_VITA_MAX = 10;
 	public static final int NUM_PIETRE = 3;
 	
-	Deque<Elemento> pietreGiocabili = new ArrayDeque <> ();
+	Deque<Pietra> pietreGiocabili = new ArrayDeque <> ();
 	
 	public TamaGolem (String nome) {
 		this.nome = nome;	
@@ -50,17 +50,17 @@ public class TamaGolem {
 	}
 	
 	//Metodo per assegnare le pietre di un TamaGolem
-	public void impostaPietre (ArrayList<Elemento> pietreScelte) {
+	public void impostaPietre (ArrayList<Pietra> pietrePerTamaGolem) {
 		
 		for(int i=0; i < NUM_PIETRE; i++) {
-			pietreGiocabili.add(pietreScelte.get(i));
+			pietreGiocabili.add(pietrePerTamaGolem.get(i));
 		}
 	}
 
 	//Metodo che permette al TamaGolem di scagliare una pietra
 	
-	public Elemento scagliaPietre() {
-		Elemento a;
+	public Pietra scagliaPietre() {
+		Pietra a;
 		a = pietreGiocabili.pollFirst();
 		pietreGiocabili.add(a);
 		a = pietreGiocabili.getFirst();
@@ -74,7 +74,7 @@ public class TamaGolem {
 		System.out.printf("TamaGolem:     %s\n", getNome());
 		System.out.printf("Punti vita:    %d\n", getPuntiVita());
 		System.out.println("Pietre del TamaGolem:");
-		for(Elemento pietra: pietreGiocabili) {
+		for(Pietra pietra: pietreGiocabili) {
 			if (i==0) {
 				System.out.printf(">%s< ", pietra.getNome());
 			}

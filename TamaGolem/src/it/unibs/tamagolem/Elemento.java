@@ -1,33 +1,48 @@
 package it.unibs.tamagolem;
 
-public class Elemento {
-	private String nome;
-	public final int id;
-	private int presenza;
-	
 
-		
-	public Elemento(String nome, int id) {
+import java.util.ArrayList;
+
+import it.unibs.mylib.EstrazioniCasuali;
+
+public enum Elemento {
+	Be ("Berillio"),
+	B  ("Boro"),
+	Ar ("Argo"),
+	Sc ("Scandio"),
+	V  ("Vanadio"),
+	Rb ("Rubidio"),
+	Zr ("Zirconio"),
+	Tc ("Tecneto"),
+	Ru ("Rutenio"),
+	Sb ("Antimonio"),
+	Xe ("Xeno"),
+	La ("Lantanio"),
+	Hf ("Afnio"),
+	W  ("Wolframio"),
+	Re ("Renio"),
+	Os ("Osmio"),
+	Rn ("Radon"),
+	Pa ("Protoattinio"),
+	Bk ("Nerkelio"),
+	Hs ("Hassio"),
+	Mt ("Meitmerio"),
+	Nh ("Nihorio"),
+	Lv ("Livermorio");
+	
+	public final String nome, simbolo;
+	
+	
+	private Elemento(String nome) {
 		this.nome = nome;
-		this.id = id;;
-		presenza = 3;
+		this.simbolo = toString();
 	}
 	
-		@Override
-	public String toString() {
-		return nome;
+	
+	public static ArrayList<Elemento> getRandom(int n) {
+		return EstrazioniCasuali.estraiObjects(n, values());
 	}
 		
-	public int getPresenza() {
-		return presenza;
-	}
-	
-	
-	public void diminuisciPresenza() {
-		this.presenza --;
-	}
-	
-	
 	public String getNome() {
 		return this.nome;
 	}

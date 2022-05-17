@@ -31,7 +31,8 @@ public class Main {
 			//rivelazione dmg
 			//}while HP > 0
 			//	}while( g1.getNumTamaGolemEvocabili() != 0 && g2.getNumTamaGolemEvocabili() != 0); 
-			Scontro sc = new Scontro();
+			Equilibrio eq = new Equilibrio(7, 3);
+			Scontro sc = new Scontro(eq);
 			sc.battaglia(g1, g2);
 			
 		//FASE 3 : dichiarazione vincitore + Equilibrio
