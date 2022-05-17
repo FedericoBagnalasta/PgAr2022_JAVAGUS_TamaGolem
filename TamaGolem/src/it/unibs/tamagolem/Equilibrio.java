@@ -129,7 +129,5 @@ public class Equilibrio implements Iterable<Pietra> {
 			}
 		};
 	}
-	
-	
-	
+
 }

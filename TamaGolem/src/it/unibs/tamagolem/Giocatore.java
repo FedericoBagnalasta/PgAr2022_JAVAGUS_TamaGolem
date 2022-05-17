@@ -22,9 +22,6 @@ public class Giocatore {
 		this.nome = nome;
 	}
 
-	//NumTamaGolemEvocaboli = G = ⎡(N - 1)(N - 2) / (2 * P)⎤ classe TamaGolem?
-	//G = ceil((N - 1)(N - 2) / (2 * P))
-
 	public int getNumTamaGolemEvocabili() {
 		return numTamaGolemEvocabili;
 	}
