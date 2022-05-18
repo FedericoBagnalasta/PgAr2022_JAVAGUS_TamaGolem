@@ -22,11 +22,11 @@ public class Equilibrio implements Iterable<Pietra> {
 	 * Costruttore della classe Equilibrio.
 	 * 
 	 * @param N il numero di elementi da creare
-	 * @param P la scorta di pietre per elemento
+	 * @param S la scorta di pietre per elemento
 	 */
-	public Equilibrio(int N, int P) {
+	public Equilibrio(int N, int S) {
 		potenze = creaEquilibrio(N);
-		pietre = Pietra.getPietre(N, P);
+		pietre = Pietra.getPietre(N, S);
 	}
 	
 	

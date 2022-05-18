@@ -1,45 +1,47 @@
 package it.unibs.tamagolem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
-public class Giocatore {
+public class Giocatore implements Iterable<TamaGolem> {
 	
-	private String nome;
-	ArrayList<TamaGolem> tamaGolemEvocabili = new ArrayList<>();
-	private int numTamaGolemEvocabili = 3;
-
-
+	private final String nome;
+	private ArrayList<TamaGolem> tamaGolemEvocati = new ArrayList<>();
+	private int numTamaGolemEvocabili;
+	
+	
+	public Giocatore(String nome, int G) {
+		this.nome = nome;
+		numTamaGolemEvocabili = G;
+	}
+	
+	
 	public void aggiungiGolem(TamaGolem golem) {
-		tamaGolemEvocabili.add(golem);
-
+		tamaGolemEvocati.add(golem);
+		numTamaGolemEvocabili-- ;
 	}
 
 	public String getNome() {
 		return nome;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public int getNumTamaGolemEvocabili() {
-		return numTamaGolemEvocabili;
-	}
-
-	public void aggiornaNumTama() {
-		numTamaGolemEvocabili-- ;
+	
+	public boolean canEvocareTamagolem() {
+		return numTamaGolemEvocabili > 0;
 	}
 	
-	public Giocatore(String nome) {
-		this.nome = nome;
+	public TamaGolem getTamagolem() {
+		return tamaGolemEvocati.get(tamaGolemEvocati.size()-1);
 	}
-
-	public boolean getTamaVivi() {
-		for (int i = 0; i < tamaGolemEvocabili.size(); i++) {
-			if(tamaGolemEvocabili.get(i).getPuntiVita() > 0)
-				return true;
-		}
-		return false;
+	
+	public boolean isTamaMorto() {
+		return getTamagolem().isMorto();
+	}
+	
+	
+	@Override
+	public Iterator<TamaGolem> iterator() {
+		return tamaGolemEvocati.iterator();
 	}
 
 

@@ -6,83 +6,77 @@ import java.util.Deque;
 
 public class TamaGolem {
 	
+	private final String nome;
 	private int puntiVita;
-	private String nome;
-	public static final int PUNTI_VITA_MAX = 10;
-	public static final int NUM_PIETRE = 3;
+	private Deque<Pietra> pietreGiocabili = new ArrayDeque <> ();
 	
-	Deque<Pietra> pietreGiocabili = new ArrayDeque <> ();
 	
-	public TamaGolem (String nome) {
+	public TamaGolem (String nome, int V) {
 		this.nome = nome;	
-		puntiVita = PUNTI_VITA_MAX;
+		puntiVita = V;
 	}
 	
 	
 	public String getNome() {
 		return nome;
 	}
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-
+	
 	public int getPuntiVita() {
 		return puntiVita;
 	}
-
-
-	public void setPuntiVita(int puntiVita) {
-		this.puntiVita = puntiVita;
-	}
-
+	
 	//Metodo che infligge danni al tamaGolem
 	public void perdiVita(int danniInflitti) {
-		puntiVita = Math.max(0, puntiVita - Math.abs(danniInflitti)) ;
+		puntiVita -= danniInflitti ;
 	}
 	
 	//Metodo di verifica della morte del TamaGolem
-	public boolean verificaVita() {
-		if (puntiVita == 0) return true;
-		else return false;
+	public boolean isMorto() {
+		return puntiVita <= 0;
+	}
+	
+	public boolean isVivo() {
+		return puntiVita > 0;
 	}
 	
 	//Metodo per assegnare le pietre di un TamaGolem
 	public void impostaPietre (ArrayList<Pietra> pietrePerTamaGolem) {
-		
-		for(int i=0; i < NUM_PIETRE; i++) {
-			pietreGiocabili.add(pietrePerTamaGolem.get(i));
-		}
+		pietreGiocabili.addAll(pietrePerTamaGolem);
 	}
-
-	//Metodo che permette al TamaGolem di scagliare una pietra
 	
+	//Metodo che permette al TamaGolem di scagliare una pietra
 	public Pietra scagliaPietre() {
-		Pietra a;
-		a = pietreGiocabili.pollFirst();
-		pietreGiocabili.add(a);
-		a = pietreGiocabili.getFirst();
-		return a;
+		Pietra p;
+		pietreGiocabili.addLast(p = pietreGiocabili.removeFirst());
+		return p;
+	}
+	
+	public Pietra getPietraScagliata() {
+		return pietreGiocabili.getLast();
+	}
+	
+	public boolean arePietreCopyOf(ArrayList<Pietra> otherPietre) {
+		int i=0;
+		for (Pietra p : pietreGiocabili) {
+			if (!p.equals(otherPietre.get(i))) return false;
+			i++;
+		}
+		return true;
 	}
 	
 	//Metodo che permette di visualizzare i dati relativi al TamaGolem
 	public void stampaTamaGolem() {
-		int i =0;
 		System.out.println("===========================");
 		System.out.printf("TamaGolem:     %s\n", getNome());
 		System.out.printf("Punti vita:    %d\n", getPuntiVita());
 		System.out.println("Pietre del TamaGolem:");
+		int i=0, n=pietreGiocabili.size();
 		for(Pietra pietra: pietreGiocabili) {
-			if (i==0) {
-				System.out.printf(">%s< ", pietra.getNome());
-			}
-			else 
-				System.out.printf("%s ", pietra.getNome());
+			System.out.printf(i==n-1 ? ">%s< " : "%s ", pietra.getNome());
 			i++;
 		}
 		System.out.println();
 		System.out.println("===========================");
 	}
+	
 }
