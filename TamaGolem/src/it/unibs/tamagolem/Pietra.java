@@ -42,6 +42,7 @@ public class Pietra {
 	}
 	
 	
+	
 	/**
 	 * Restituisce un array casuale di pietre di lunghezza specificata.
 	 * 

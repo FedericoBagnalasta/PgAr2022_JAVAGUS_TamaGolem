@@ -38,6 +38,7 @@ public class Scontro {
 		evocazioneTama(g2, g1);
 		
 		System.out.println("che cominci la battaglia");
+		System.out.println("in caso si voglia velocizzare la battaglia, si digiti \"#\"");
 		Giocatore perdente;
 		
 		while (true) {
@@ -101,39 +102,52 @@ public class Scontro {
 	 * metodo che permette ad un giocatore di scegliere delle pietre da usare su un TamaGolem 
 	 */
 	private void sceltaPietre(ArrayList<Pietra> pietrePerTamaGolem) {
+		boolean nomeErrato = false;
+		ArrayList<String> sbagliati = new ArrayList<>();
 		while (true) {
 			stampaPietreDisponibili();
 			System.out.println("[%d/%d] pietre selezionate".formatted(pietrePerTamaGolem.size(), P));
 			String[] nomePietre = InputDati.leggiStringaNonVuota("inserire i nomi o i simboli per selezionare le pietre associate\n")
 					.split(" ");
-			
+
 			for (String nomePietra : nomePietre) {
 				Pietra p = findPietraByName(nomePietra);
-				
+
 				if (p==null) { // pietra non trovata
-					System.out.println("il nome \"%s\" non è valido".formatted(nomePietra));
-					break;
+					nomeErrato = true;
+					sbagliati.add(nomePietra);
 				}
-				
-				if (p.isScortaFinita()) { // pietra trovata ma scorta finita
+
+				else if (p.isScortaFinita()) { // pietra trovata ma scorta finita
 					System.out.println("non ci sono più pietre di tipo %s selezionabili".formatted(p.toString()));
 					break;
 				}
-				
-				// pietra trovata con scorta
-				p.diminuisciPresenza();
-				pietrePerTamaGolem.add(p);
-				if (pietrePerTamaGolem.size()==P) break; // non voglio più di P pietre
-				
+
+				else { //pietra trovata
+					p.diminuisciPresenza();
+					pietrePerTamaGolem.add(p);
+					if (pietrePerTamaGolem.size()==P) break; // non voglio più di P pietre
+				}
+			}
+			
+			if (nomeErrato) {
+				int l = sbagliati.size();
+				System.out.printf(l==1 ? "Il nome " : "I nomi ");
+				for (String nome_sbagliato: sbagliati) {				
+				System.out.printf("\"%s\", ",nome_sbagliato);
+				}
+				System.out.println(l==1 ? "è errato" : "sono errati");
+				nomeErrato = false;
 			}
 			
 			pietre.removeIf(Pietra::isScortaFinita);
 			if (pietrePerTamaGolem.size()==P) return;
 			
 			System.out.println("scegliere un'altra pietra");
-			
+			sbagliati.clear();
 		}
 	}
+	
 	
 	/**
 	 * metodo che stampa le pietre disonibili, di supporto alla scelta pietre
@@ -173,16 +187,26 @@ public class Scontro {
 	 */
 	private Giocatore battagliaTama(Giocatore g1, Giocatore g2) {
 		boolean entrambiVivi = true;
+		boolean primoGiro = true;
+		boolean veloce = false;
 		int potenza = 99;
+		String controllo = " ";
 		TamaGolem tama1 = g1.getTamagolem();
 		TamaGolem tama2 = g2.getTamagolem();
 		stampaSituazione(tama1, tama2, potenza);
 		//Thread.sleep(2000);
-		InputDati.leggiStringa("next>");
+		controllo  = InputDati.leggiStringa("next>");
+		Pietra a = tama1.getPietraScagliata();
+		Pietra b = tama2.getPietraScagliata();
 		
 		do {
-			Pietra a = tama1.scagliaPietre();
-			Pietra b = tama2.scagliaPietre();
+			if (controllo.equals("#"))
+				veloce = true;
+
+			if (!primoGiro) {
+			a = tama1.scagliaPietre();
+			b = tama2.scagliaPietre();
+			}
 			potenza = parametri.confrontaElementi(a, b);
 			if (potenza > 0) {
 				tama2.perdiVita(potenza);
@@ -193,12 +217,20 @@ public class Scontro {
 			
 			entrambiVivi = tama1.isVivo() && tama2.isVivo();
 			if (entrambiVivi) {
-				stampaSituazione(tama1, tama2, potenza);
-				//Thread.sleep(2000);
-				InputDati.leggiStringa("next>");
+				if (!veloce) {
+					stampaSituazione(tama1, tama2, potenza);
+					controllo  = InputDati.leggiStringa("next>");
+				}else {
+					System.out.printf("%s + %s = %d\n",tama1.getPietraScagliata(), tama2.getPietraScagliata(), potenza);
+					System.out.println(tama1.getNome() + ": " + tama1.getPuntiVita());
+					System.out.println(tama2.getNome() + ": " + tama2.getPuntiVita());
+					System.out.println("-----------------------------------");
+				}
+				
 			}
+			primoGiro = false;
 			
-			System.out.println("g1:%d, g2:%d".formatted(tama1.getPuntiVita(), tama2.getPuntiVita()));
+			
 		} while (entrambiVivi);
 		
 		

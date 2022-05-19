@@ -48,11 +48,11 @@ public class TamaGolem {
 	public Pietra scagliaPietre() {
 		Pietra p;
 		pietreGiocabili.addLast(p = pietreGiocabili.removeFirst());
-		return p;
+		return pietreGiocabili.getFirst();
 	}
 	
 	public Pietra getPietraScagliata() {
-		return pietreGiocabili.getLast();
+		return pietreGiocabili.getFirst();
 	}
 	
 	public boolean arePietreCopyOf(ArrayList<Pietra> otherPietre) {
@@ -72,7 +72,7 @@ public class TamaGolem {
 		System.out.println("Pietre del TamaGolem:");
 		int i=0, n=pietreGiocabili.size();
 		for(Pietra pietra: pietreGiocabili) {
-			System.out.printf(i==n-1 ? ">%s< " : "%s ", pietra.getNome());
+			System.out.printf(i==0 ? ">%s< " : "%s ", pietra.getNome());
 			i++;
 		}
 		System.out.println();
