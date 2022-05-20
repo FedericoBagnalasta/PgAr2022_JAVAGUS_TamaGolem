@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Pietra {
 	
-	private Elemento elemento;
+	public final Elemento elemento;
 	public final int id;
 	private int presenza;
 	
@@ -41,6 +41,16 @@ public class Pietra {
 			|| getNome().equalsIgnoreCase(str);
 	}
 	
+	
+	/**
+	 * Restituisce una copia della pietra con scorta specificata.
+	 * 
+	 * @param S la scorta della pietra create
+	 * @return una copia della pietra con scorta specificata
+	 */
+	public Pietra copyWithScorta(int S) {
+		return new Pietra(elemento, id, S);
+	}
 	
 	
 	/**

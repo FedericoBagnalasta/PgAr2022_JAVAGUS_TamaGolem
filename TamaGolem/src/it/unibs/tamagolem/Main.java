@@ -30,9 +30,11 @@ public class Main {
 			
 			//FASE 2 : SCONTRO
 			//giocatore A: 
-			Giocatore g1 = new Giocatore(InputDati.leggiStringaNonVuota(NOME1), G);	
+			String nomeG1 = InputDati.leggiStringaNonVuota(NOME1);
+			Giocatore g1 = new Giocatore(nomeG1, G);	
 			//giocatore B:
-			Giocatore g2 = new Giocatore(InputDati.leggiStringaNonVuota(NOME2), G);
+			String nomeG2 = InputDati.leggiStringaNonVuotaDiversaDa(NOME2, nomeG1);
+			Giocatore g2 = new Giocatore(nomeG2, G);
 			
 			//TURNI : + dichiarazione vincitore
 			Scontro sc = new Scontro(equilibrio, P, V);

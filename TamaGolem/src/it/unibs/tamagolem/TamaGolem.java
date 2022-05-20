@@ -41,19 +41,19 @@ public class TamaGolem {
 	
 	//Metodo per assegnare le pietre di un TamaGolem
 	public void impostaPietre (ArrayList<Pietra> pietrePerTamaGolem) {
-		pietreGiocabili.addAll(pietrePerTamaGolem);
+		pietrePerTamaGolem.forEach(p -> {
+			pietreGiocabili.add(p);
+			System.out.format("pietra di %s inserita%n", p);
+		});
 	}
 	
 	//Metodo che permette al TamaGolem di scagliare una pietra
 	public Pietra scagliaPietre() {
 		Pietra p;
 		pietreGiocabili.addLast(p = pietreGiocabili.removeFirst());
-		return pietreGiocabili.getFirst();
+		return p;
 	}
 	
-	public Pietra getPietraScagliata() {
-		return pietreGiocabili.getFirst();
-	}
 	
 	public boolean arePietreCopyOf(ArrayList<Pietra> otherPietre) {
 		int i=0;
@@ -65,15 +65,26 @@ public class TamaGolem {
 	}
 	
 	//Metodo che permette di visualizzare i dati relativi al TamaGolem
-	public void stampaTamaGolem() {
+	public void stampaTamaGolem(boolean isInizio) {
 		System.out.println("===========================");
 		System.out.printf("TamaGolem:     %s\n", getNome());
 		System.out.printf("Punti vita:    %d\n", getPuntiVita());
 		System.out.println("Pietre del TamaGolem:");
-		int i=0, n=pietreGiocabili.size();
-		for(Pietra pietra: pietreGiocabili) {
-			System.out.printf(i==0 ? ">%s< " : "%s ", pietra.getNome());
-			i++;
+		if (isInizio) {
+			int i=0;
+			for(Pietra pietra: pietreGiocabili) {
+				System.out.printf(i==0 ? ">%s< " : "%s ", pietra.getNome());
+				i++;
+			}
+			
+		} else {
+			System.out.printf(">%s< ", pietreGiocabili.getLast().getNome());
+			int i=0, n=pietreGiocabili.size();
+			for(Pietra pietra: pietreGiocabili) {
+				System.out.printf(i==n-1 ? "" : "%s ", pietra.getNome());
+				i++;
+			}
+			
 		}
 		System.out.println();
 		System.out.println("===========================");

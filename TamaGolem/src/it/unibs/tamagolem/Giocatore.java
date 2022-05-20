@@ -26,6 +26,10 @@ public class Giocatore implements Iterable<TamaGolem> {
 		return nome;
 	}
 	
+	public int getNumTamaGolemEvocabili() {
+		return numTamaGolemEvocabili;
+	}
+	
 	public boolean canEvocareTamagolem() {
 		return numTamaGolemEvocabili > 0;
 	}

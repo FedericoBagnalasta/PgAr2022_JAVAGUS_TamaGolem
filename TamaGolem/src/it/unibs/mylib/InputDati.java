@@ -9,6 +9,7 @@ public class InputDati {
 	private final static String ERRORE_FORMATO = "Attenzione: il dato inserito non e' nel formato corretto";
 	private final static String ERRORE_MINIMO = "Attenzione: e' richiesto un valore maggiore o uguale a ";
 	private final static String ERRORE_STRINGA_VUOTA = "Attenzione: non hai inserito alcun carattere";
+	private final static String ERRORE_STRINGA_COMBACIA = "Attenzione: non è possibile inserire la stringa %s";
 	private final static String ERRORE_MASSIMO = "Attenzione: e' richiesto un valore minore o uguale a ";
 	private final static String MESSAGGIO_AMMISSIBILI = "Attenzione: i caratteri ammissibili sono: ";
 	
@@ -37,6 +38,18 @@ public class InputDati {
 			else
 				System.out.println(ERRORE_STRINGA_VUOTA);
 		} while (!finito);
+		return lettura;
+	}
+	public static String leggiStringaNonVuotaDiversaDa(String messaggio, String str) {
+		boolean ripeti;
+		String lettura;
+		do {
+			lettura = leggiStringaNonVuota(messaggio);
+			ripeti = lettura.equalsIgnoreCase(str);
+			if (ripeti) {
+				System.out.println(String.format(ERRORE_STRINGA_COMBACIA, str));
+			}
+		} while (ripeti);
 		return lettura;
 	}
 	
@@ -153,7 +166,7 @@ public class InputDati {
 	}
 	
 	public static boolean yesOrNo(String messaggio) {
-		String mioMessaggio = messaggio + "(" + RISPOSTA_SI + "/" + RISPOSTA_NO + ")";
+		String mioMessaggio = messaggio + "[" + RISPOSTA_SI + "/" + RISPOSTA_NO + "]";
 		char valoreLetto = leggiUpperChar(mioMessaggio, String.valueOf(RISPOSTA_SI) + String.valueOf(RISPOSTA_NO));
 		return valoreLetto == RISPOSTA_SI;
 	}
